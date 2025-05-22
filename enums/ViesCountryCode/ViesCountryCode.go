@@ -1,4 +1,4 @@
-package CountryCode
+package ViesCountryCode
 
 type Enum string
 

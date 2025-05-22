@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/thereisnoplanb/vies/enums/CountryCode"
+	"github.com/thereisnoplanb/vies/enums/ViesCountryCode"
 )
 
 type vies struct {
@@ -38,20 +38,20 @@ type viesApproximate struct {
 
 func (client *Client) get(euVat string) (vies vies, statusCode int, err error) {
 
-	countryCode := CountryCode.Enum("")
+	viesCountryCode := ViesCountryCode.Enum("")
 	if len(euVat) > 1 {
-		countryCode = CountryCode.Enum(euVat[:2])
+		viesCountryCode = ViesCountryCode.Enum(euVat[:2])
 	}
 	vatNumber := ""
 	if len(euVat) > 2 {
 		vatNumber = euVat[2:]
 	}
 
-	if !countryCode.IsDefined() {
-		return vies, statusCode, errors.New("country code is not defined")
+	if !viesCountryCode.IsDefined() {
+		return vies, statusCode, errors.New("vies country code is not defined")
 	}
 
-	response, err := client.httpClient.Get(fmt.Sprintf("%s/%s/vat/%s", address, countryCode, vatNumber))
+	response, err := client.httpClient.Get(fmt.Sprintf("%s/%s/vat/%s", address, viesCountryCode, vatNumber))
 	if err != nil {
 		return vies, statusCode, err
 	}
